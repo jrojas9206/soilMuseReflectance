@@ -1,0 +1,9 @@
+PyQt5
+pytest
+numpy
+pylint
+mypy
+matplotlib
+scipy 
+scikit-learn
+opencv-python 
