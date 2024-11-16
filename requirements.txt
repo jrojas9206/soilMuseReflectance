@@ -1,9 +1,9 @@
-PyQt5
-pytest
+mypy
+scipy 
 numpy
 pylint
-mypy
+pytest
+pandas 
 matplotlib
-scipy 
 scikit-learn
 opencv-python 

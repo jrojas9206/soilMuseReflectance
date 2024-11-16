@@ -2,6 +2,8 @@ import os
 from pathlib import Path
 import matplotlib.pyplot as plt 
 from srmouse.processor import ReflectancePointLoader
+from srmouse.processor import LoadMeasurements
+from srmouse.viz import plotReflectanceSignature
 
 root = str(Path(__file__).parent.absolute())
 path2test = Path( os.path.join(root, 
@@ -10,18 +12,13 @@ path2test = Path( os.path.join(root,
 def test_reflectancePointLoader():
     oRP = ReflectancePointLoader(path2test)
     df = oRP.getResults().head()
-    seriesCalibration = df.loc[0]
-    idx = seriesCalibration.index 
-    values = seriesCalibration.values
-
-    seriesPoint0 = df.loc[1]
-    idx0 = seriesPoint0.index
-    values0 = seriesPoint0.values
-    plt.plot(idx, values)
-    plt.plot(idx0, values0)
-    plt.xlabel('Wavelenght (nn)')
-    plt.ylabel('Amplitude')
-    plt.title('Soil reflectance test')
-    plt.show()
+    
+    print(oRP.getBands())
+    plotReflectanceSignature(df,
+                             idx2skip=0,
+                             title='Soil Reflectance Signature: CPR-ATL-KET_control',
+                             avgPlot=True)
 
 test_reflectancePointLoader()
+
+LoadMeasurements('/home/pablo/Documents/repos/soilMuseReflectance/data')

@@ -1,8 +1,8 @@
 import os 
 import sys 
 import cv2
-import numpy 
 import warnings 
+import numpy as np
 import pandas as pd 
 
 class ReflectancePointLoader():
@@ -10,10 +10,19 @@ class ReflectancePointLoader():
         Class to load and sort txt file with the 
         reflectande measurements from the Muse Software 
     '''
-    def __init__(self, iPath2file:str, bands:int=12) -> None:
+    def __init__(self, iPath2file:str=None, bands:int=12) -> None:
         self._path2file = iPath2file
         self._dfMeasurements = None
         self._bands = bands
+        if iPath2file is not None:
+            self.__loadTxtFile()
+
+    def setPath(self, iPath2File:str) -> None:
+        self._path2file = iPath2File
+        self.__loadTxtFile()
+
+    def getPath(self) -> str:
+        return self._path2file()
 
     def __loadTxtFile(self):
         '''
@@ -42,5 +51,21 @@ class ReflectancePointLoader():
         '''
             Return the dataframe with the sorted band's reflectance
         ''' 
-        self.__loadTxtFile()
         return self._dfMeasurements
+    
+    def getBands(self) -> list:
+        '''
+            Return the bands spectrum available in the file
+        '''
+        return np.unique(self._dfMeasurements.columns.tolist())
+    
+class LoadMeasurements():
+
+    def __init__(self, rootFolder:str, skipFolder:str='Calibration'):
+        """
+            :Args:
+                :rootFolder: str, Absolute path to the folder with the measurements
+                :skipFolder: str, Measurement folder to not take into acount
+        """
+        listDirectories = [os.path.join(rootFolder, folderName) for folderName in os.listdir(rootFolder) if folderName != skipFolder]
+        

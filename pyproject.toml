@@ -7,6 +7,8 @@ name = "srmouse"
 version = "0.0.1"
 description = "Processing tool for the images captured with the Mouse Camera - Soil sample application"
 
+dynamic = ["dependencies"]
+
 authors = [
   {name = "Juan Pablo Rojas Bustos", email = "jrojas9206@gmail.com"},
 ]
