@@ -10,19 +10,21 @@ class ReflectancePointLoader():
         Class to load and sort txt file with the 
         reflectande measurements from the Muse Software 
     '''
-    def __init__(self, iPath2file:str=None, bands:int=12) -> None:
-        self._path2file = iPath2file
+    def __init__(self, iPath2file:str=None) -> None:
+        self._path2file = str(iPath2file)
         self._dfMeasurements = None
-        self._bands = bands
         if iPath2file is not None:
             self.__loadTxtFile()
 
     def setPath(self, iPath2File:str) -> None:
-        self._path2file = iPath2File
+        self._path2file = str(iPath2File)
         self.__loadTxtFile()
 
     def getPath(self) -> str:
         return self._path2file()
+    
+    def getSetName(self, separator:str='/'):
+        return self._path2file.split(separator)[-3]
 
     def __loadTxtFile(self):
         '''
@@ -59,13 +61,24 @@ class ReflectancePointLoader():
         '''
         return np.unique(self._dfMeasurements.columns.tolist())
     
-class LoadMeasurements():
-
-    def __init__(self, rootFolder:str, skipFolder:str='Calibration'):
-        """
-            :Args:
-                :rootFolder: str, Absolute path to the folder with the measurements
-                :skipFolder: str, Measurement folder to not take into acount
-        """
-        listDirectories = [os.path.join(rootFolder, folderName) for folderName in os.listdir(rootFolder) if folderName != skipFolder]
-        
+def LoadMeasurements(rootFolder:str, skipFolder:str='Calibration', subPath:str='Data') -> list:
+    """
+        Load a set of measurements 
+    
+        :Args:
+            :rootFolder: str, Absolute path to the folder with the measurements
+            :skipFolder: str, Measurement folder to not take into acount
+            :subPath: str, Sub folder where the reflectance measurements are located 
+    """
+    listDirectories = [os.path.join(rootFolder, folderName, subPath) for folderName in os.listdir(rootFolder) if folderName != skipFolder]
+    dfList = []
+    dfNames = []
+    for folder in listDirectories:
+        file2load = [os.path.join(folder,i) for i in os.listdir(folder) if '.txt' in i]
+        if len(file2load) == 0:
+            continue
+        file2load = file2load[0]
+        oRP = ReflectancePointLoader(file2load)
+        dfList.append(oRP.getResults())
+        dfNames.append(oRP.getSetName())
+    return dfList, dfNames

@@ -43,14 +43,21 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nn)", ylabel:st
     plt.show()
 
 def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nn)", ylabel:str="Reflectance", 
-                             title:str='Soil Reflectance Signature',avgPlot:bool=False) -> None:
+                             title:str='Soil Reflectance Signature',avgPlot:bool=False, filesNames:list=None) -> None:
     """
         Plot a list of reflectance meqsurements from different areas 
 
         :Args:
             :dfList: list, List of pandas DataFrames, the column of each dataframe are the bands and the rows the measured points
     """
-    for measuredPoints in dfList:
+    if(len(dfList) != len(filesNames)):
+        raise ValueError("List length of dfList and filesNames is different. They must be the same length")
+    listLegends = []
+    bandValues = []
+    bandNames = []
+    for idxFiles, measuredPoints in enumerate(dfList):
+        bandValues = []
+        bandNames = []
         if avgPlot:
             for colName in measuredPoints.columns.tolist():
                 if idx2skip >= 0:
@@ -60,6 +67,8 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
                 bandNames.append(colName)
             plt.plot(range(len(bandNames)), 
                         bandValues)
+            if len(filesNames) == len(dfList):
+                listLegends.append("%s" %(filesNames[idxFiles]))
         else:
             for idx in range(measuredPoints.shape[0]):
                 if idx2skip >= 0 and idx2skip == idx:
@@ -69,10 +78,14 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
                 bandValues = list(measuredPoint.values) 
                 plt.plot(range(len(bandNames)), 
                         bandValues)
+                if len(filesNames) == len(dfList):
+                    listLegends.append("%s-%i" %(filesNames[idxFiles], idx))
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.xticks(range(len(bandNames)),
                bandNames)
     plt.title(title)
+    if len(filesNames) == len(dfList):
+        plt.legend(listLegends)
     plt.tight_layout()
     plt.show()
