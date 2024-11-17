@@ -147,3 +147,6 @@ class SpectralCube:
 
     def getCube(self):
         return self._mImage
+    
+    def getBands(self):
+        return self._bands

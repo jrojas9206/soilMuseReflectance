@@ -1,3 +1,4 @@
+import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
 
@@ -87,3 +88,20 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
     if len(filesNames) == len(dfList):
         plt.legend(listLegends)
     plt.tight_layout()
+
+def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=255, legend:list=[], xlabel:str='Pixel Values', ylabel:str='Frequency', title:str="Bands Histogram"):
+    idx2keep = np.where(mask == value2keep)
+    _, edges = np.histogram(img, 
+                            bins=bins)
+    channels = img.shape[2]
+    plt.figure()
+    for idx in range(channels):
+        cImage = img[:, :, idx]
+        objIterest = cImage[idx2keep].reshape(-1,1)
+        plt.hist(objIterest, 
+                 bins=edges, alpha=0.5)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.tight_layout()
+    if len(legend) == img.shape[2]:
+        plt.legend(legend)
