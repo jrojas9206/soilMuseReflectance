@@ -40,7 +40,6 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nn)", ylabel:st
                bandNames)
     plt.title(title)
     plt.tight_layout()
-    plt.show()
 
 def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nn)", ylabel:str="Reflectance", 
                              title:str='Soil Reflectance Signature',avgPlot:bool=False, filesNames:list=None) -> None:
@@ -88,4 +87,3 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
     if len(filesNames) == len(dfList):
         plt.legend(listLegends)
     plt.tight_layout()
-    plt.show()
