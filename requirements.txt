@@ -1,6 +1,7 @@
 mypy
 scipy 
 numpy
+PyQt5
 pylint
 pytest
 pandas 
