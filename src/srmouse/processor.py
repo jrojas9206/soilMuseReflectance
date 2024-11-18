@@ -24,7 +24,10 @@ class ReflectancePointLoader():
         return self._path2file()
     
     def getSetName(self, separator:str='/'):
-        return self._path2file.split(separator)[-3]
+        try:
+            return self._path2file.split(separator)[-3]
+        except IndexError as err:
+            raise IndexError('It was not possible to obtain the set name from %s' %(self._path2file))
 
     def __loadTxtFile(self):
         '''
@@ -80,7 +83,10 @@ def LoadMeasurements(rootFolder:str, skipFolder:str='Calibration', subPath:str='
         file2load = file2load[0]
         oRP = ReflectancePointLoader(file2load)
         dfList.append(oRP.getResults())
-        dfNames.append(oRP.getSetName())
+        if os.name == 'nt':
+            dfNames.append(oRP.getSetName(separator="\\"))
+        else:    
+            dfNames.append(oRP.getSetName())
     return dfList, dfNames
 
 class SpectralCube:
