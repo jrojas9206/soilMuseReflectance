@@ -5,6 +5,7 @@ PyQt5
 pylint
 pytest
 pandas 
+notebook
 matplotlib
 scikit-learn
 opencv-python 
