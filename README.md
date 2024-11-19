@@ -22,16 +22,22 @@ source .venv/bin/activate
 python -m pip install build
 ```
 
-4. Install the package
+4. Build the package 
+
+```bash
+python -m build
+```
+
+5. Install the package
 
 ```bash
 python -m pip install -e .
 ```
 
-5. Import the package in your project 
+6. Import the package in your project 
 
 ```python 
 import srmouse 
 ```
 
-6. Initial results can be seen in the [Notebook](https://github.com/jrojas9206/soilMuseReflectance/blob/main/notebook/241119_demo.ipynb)
+7. Initial results can be seen in the [Notebook](https://github.com/jrojas9206/soilMuseReflectance/blob/main/notebook/241119_demo.ipynb)
