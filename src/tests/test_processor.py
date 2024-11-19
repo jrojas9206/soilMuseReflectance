@@ -9,6 +9,7 @@ from srmouse.viz import plotReflectanceSignatures
 from srmouse.processor import SpectralCube
 from srmouse.imageTools import manualCropPetriDishe
 from srmouse.viz import histSoilSample
+from srmouse.viz import showManualPoint
 
 root = str(Path(__file__).parent.absolute())
 path2test = Path(os.path.join(root, 
@@ -32,10 +33,10 @@ test_reflectancePointLoader()
 
 lstValues, lstNames = LoadMeasurements(path2measurements)
 
-# plotReflectanceSignatures(lstValues, 
-#                           idx2skip=0,
-#                           avgPlot=True, 
-#                           filesNames=lstNames)
+plotReflectanceSignatures(lstValues, 
+                        idx2skip=0,
+                        avgPlot=True, 
+                        filesNames=lstNames)
 
 sc_ex = SpectralCube(path2spectralCube)
 
@@ -48,6 +49,9 @@ plotReflectanceSignature(df,
 
 
 img = cv2.imread(path2rgbImage, cv2.COLOR_BGR2RGB)
+
+showManualPoint(img,
+                [[500, 500], [1000, 1000]])
 
 segmented = manualCropPetriDishe(img,
                      [500, 500],
