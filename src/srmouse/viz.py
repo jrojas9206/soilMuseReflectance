@@ -1,3 +1,4 @@
+import cv2
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
@@ -105,3 +106,18 @@ def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=25
     plt.tight_layout()
     if len(legend) == img.shape[2]:
         plt.legend(legend)
+
+def showManualPoint(image:np.array, points:list, cross:int=100, thikness:int=5):
+    img = image.copy()
+    for point in points:
+        img = cv2.line(img, 
+                (point[0]-cross, point[1]-cross), 
+                (point[0]+cross, point[1]+cross), 
+                (0, 0, 255),
+                thickness=thikness) 
+        img = cv2.line(img, 
+                (point[0]+cross, point[1]-cross), 
+                (point[0]-cross, point[1]+cross), 
+                (0, 0, 255), 
+                thickness=5)
+    plt.imshow(img) 
