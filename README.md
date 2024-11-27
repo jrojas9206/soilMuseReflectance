@@ -53,8 +53,8 @@ python -m srmouse.muse_app absolute/path/to/spectralCube  --scale=6 --kernelSize
 After executing the command you will see something like the bottom figure 
 
 <figure>
-    <center>
+    <p align="center">
         <img src='images/initial_ui_tool.png' width=300 height=120/>
+    </p>
         <figcaption><b>Figure.</b> UI to visualize the pixel values of the multispectral images.</figcaption>
-    </center>
 <figure>
