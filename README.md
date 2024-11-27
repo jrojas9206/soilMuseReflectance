@@ -54,7 +54,7 @@ After executing the command you will see something like the bottom figure
 
 <figure>
     <p align="center">
-        <img src='images/initial_ui_tool.png' width=300 height=120/>
+        <img src='images/initial_ui_tool.png' width=500 height=220/>
     </p>
         <figcaption><b>Figure.</b> UI to visualize the pixel values of the multispectral images.</figcaption>
 <figure>
