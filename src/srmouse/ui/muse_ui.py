@@ -11,6 +11,7 @@ class SimpleUI:
 
     EXPECTED_BANDS = [365, 400, 465, 540, 640, 700, 750, 800, 850, 900, 950, 1000]
     UI_NAME = 'SRMOUSE'
+    NUMBER_OF_BANDS = 12
 
     def __init__(self, path2image:str, resizeScale:int=4, kernelSize:tuple=(2,2), imageExtension:str='jpg', crossSize:int=10, crossThickness:int=2):
         '''
@@ -85,7 +86,7 @@ class SimpleUI:
                                                returnImage=True)
             cv2.imshow(self.UI_NAME, self._image2show)
             for indexSignatures, signature in enumerate(self._signatures, start=1):
-                self.ax.plot(range(1,13), signature)
+                self.ax.plot(range(1,self.NUMBER_OF_BANDS+1), signature)
                 listLegends.append(f'Point: {indexSignatures}')
             self.ax.set_xticks(range(1, len(self.EXPECTED_BANDS)+1), self.EXPECTED_BANDS)
             self.ax.set_title('Multispectral Siganture')
