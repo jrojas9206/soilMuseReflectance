@@ -41,3 +41,18 @@ import srmouse
 ```
 
 7. Initial results can be seen in the [Notebook](https://github.com/jrojas9206/soilMuseReflectance/blob/main/notebook/241119_demo.ipynb)
+
+## SRMouse UI 
+
+To call a GUI that allows you to obtain your signature fast, you can call the *SRMouse UI*. To called execture the following command.
+
+```bash 
+python -m srmouse.muse_app absolute/path/to/spectralCube  --scale=6 --kernelSize 4 4
+```
+
+After executing the command you will see something like the bottom figure 
+
+<figure>
+    <img src='images/initial_ui_tool.png' width=300 height=120/>
+    <figcaption><b>Figure.</b> UI to visualize the pixel values of the multispectral images.</figcaption>
+<figure>
