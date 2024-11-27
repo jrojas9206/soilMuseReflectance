@@ -107,7 +107,7 @@ def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=25
     if len(legend) == img.shape[2]:
         plt.legend(legend)
 
-def showManualPoint(image:np.array, points:list, cross:int=100, thikness:int=5):
+def showManualPoint(image:np.array, points:list, cross:int=100, thikness:int=5, returnImage:bool=False):
     img = image.copy()
     for point in points:
         img = cv2.line(img, 
@@ -119,5 +119,7 @@ def showManualPoint(image:np.array, points:list, cross:int=100, thikness:int=5):
                 (point[0]+cross, point[1]-cross), 
                 (point[0]-cross, point[1]+cross), 
                 (0, 0, 255), 
-                thickness=5)
+                thickness=thikness)
+    if returnImage:
+        return img
     plt.imshow(img) 
