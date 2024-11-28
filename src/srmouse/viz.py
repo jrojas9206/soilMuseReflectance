@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
 
-def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
+def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:str="Reflectance (%)", 
                              title:str='Soil Reflectance Signature', idx2skip:int=-1,
                              avgPlot:bool=False) -> None:
     '''
@@ -43,7 +43,7 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:st
     plt.title(title)
     plt.tight_layout()
 
-def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
+def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nm)", ylabel:str="Reflectance (%)", 
                              title:str='Soil Reflectance Signature',avgPlot:bool=False, filesNames:list=None) -> None:
     """
         Plot a list of reflectance meqsurements from different areas 
