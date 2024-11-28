@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
 
-def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nn)", ylabel:str="Reflectance", 
+def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
                              title:str='Soil Reflectance Signature', idx2skip:int=-1,
                              avgPlot:bool=False) -> None:
     '''
