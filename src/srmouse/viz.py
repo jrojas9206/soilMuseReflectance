@@ -42,6 +42,7 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:st
                bandNames)
     plt.title(title)
     plt.tight_layout()
+    # plt.savefig("Reflectance_Signature_results.png", dpi=150)  # Uncomment this line if you want to save your plot as .png-file
 
 def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
                              title:str='Soil Reflectance Signature',avgPlot:bool=False, filesNames:list=None) -> None:
@@ -89,6 +90,7 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
     if len(filesNames) == len(dfList):
         plt.legend(listLegends)
     plt.tight_layout()
+    # plt.savefig("Reflectance_Signature_results.png", dpi=150)  # Uncomment this line if you want to save your plot as .png-file
 
 def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=255, legend:list=[], xlabel:str='Pixel Values', ylabel:str='Frequency', title:str="Bands Histogram"):
     idx2keep = np.where(mask == value2keep)
