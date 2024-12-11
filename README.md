@@ -2,6 +2,38 @@
 
 Pipeline for the soil analysis using the Muse Camera
 
+## Expected project distribution 
+
+The following file distribution need to be set in order to work with the SRMouse package
+
+```
+📦data
+ ┣ 📂Calibration
+ ┃ ┣ 📜calibration.bfl
+ ┃ ┗ 📜calibration.bfl.log
+ ┣ 📂Project Name
+ ┃ ┣ 📂Data
+ ┃ ┃ ┣ 📜Spectrum_Data.txt
+ ┃ ┃ ┗ 📜Spectrum_Data.xlsx
+ ┃ ┣ 📂Images
+ ┃ ┃ ┣ 📜Program_screenshot.PNG
+ ┃ ┃ ┗ 📜RGB_image.png
+ ┃ ┗ 📂Spectral_Cube
+ ┃ ┃ ┣ 📜CPR-ATL-KET_control.xml
+ ┃ ┃ ┣ 📜image1000.jpg
+ ┃ ┃ ┣ 📜image365.jpg
+ ┃ ┃ ┣ 📜image400.jpg
+ ┃ ┃ ┣ 📜image465.jpg
+ ┃ ┃ ┣ 📜image540.jpg
+ ┃ ┃ ┣ 📜image640.jpg
+ ┃ ┃ ┣ 📜image700.jpg
+ ┃ ┃ ┣ 📜image750.jpg
+ ┃ ┃ ┣ 📜image800.jpg
+ ┃ ┃ ┣ 📜image850.jpg
+ ┃ ┃ ┣ 📜image900.jpg
+ ┃ ┃ ┗ 📜image950.jpg
+```
+
 ## Installation 
 
 1. Create a virtual environment 
