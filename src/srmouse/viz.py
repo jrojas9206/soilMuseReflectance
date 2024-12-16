@@ -4,15 +4,22 @@ import pandas as pd
 import matplotlib.pyplot as plt 
 
 def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
-                             title:str='Soil Reflectance Signature', idx2skip:int=-1,
-                             avgPlot:bool=False) -> None:
+                             title:str='Soil Reflectance Signature', idx2skip:list=[],
+                             avgPlot:bool=False, savePlot:str=None) -> None:
     '''
         Plot the reflectance values sorted in the dataframe 
         in the row it is expected a measurement point and in the columns 
         each of the bands related to point 
 
-        :Args:
-            :df:  pandas.DataFrame, DataFrame with the different reflectance measurements 
+        Parameters
+        -----------
+            df : pandas.DataFrame, DataFrame with the different reflectance measurements 
+            xlabel : str, Name to set in the x-axis 
+            ylabel : str, Name to set in the y-Axis 
+            title : str, Plot title
+            idx2skip : list, List of dataframe index to skip, Default []
+            avgPlot : bool, If true the avarange all the signatures will be displayed. Default False 
+            savePlot : str, Path and filename to save the plot e.g: /home/reflectanceSignature.png. Default None 
     '''
     plt.figure()
     bandNames = []
@@ -29,7 +36,7 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:st
         
     else:
         for idx in range(df.shape[0]):
-            if idx2skip >= 0 and idx2skip == idx:
+            if idx in idx2skip:
                 continue
             measuredPoint = df.loc[idx]
             bandNames = list(measuredPoint.index)
@@ -42,17 +49,27 @@ def plotReflectanceSignature(df:pd.DataFrame, xlabel:str="Bands (nm)", ylabel:st
                bandNames)
     plt.title(title)
     plt.tight_layout()
-    # plt.savefig("Reflectance_Signature_results.png", dpi=150)  ## Uncomment this line, if you want to save plot as .png-file                           
+    if not isinstance(savePlot, type(None)):
+        plt.savefig(savePlot, dpi=300)
 
-def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
-                             title:str='Soil Reflectance Signature',avgPlot:bool=False, filesNames:list=None) -> None:
+def plotReflectanceSignatures(dfList:list, idx2skip:list=[], xlabel:str="Bands (nm)", ylabel:str="Reflectance", 
+                             title:str='Soil Reflectance Signature',avgPlot:bool=False, legend:list=None, 
+                             savePlot:str=None) -> None:
     """
-        Plot a list of reflectance meqsurements from different areas 
+        Plot a list of reflectance measurements from different areas 
 
-        :Args:
-            :dfList: list, List of pandas DataFrames, the column of each dataframe are the bands and the rows the measured points
+        Parameters 
+        -----------
+            dfList : list, List of pandas DataFrames, the column of each dataframe are the bands and the rows the measured points
+            idx2skip : list, List of index to skip
+            xlabel : str, Name of the x-axis. Default "Bands (nm)" 
+            ylabel : str, Name of the y-axis. Default "Reflectance"
+            title : str, plot title. Default 'Soil Reflectance Signature'
+            avgPlot : bool, If true the averga plot of all the signature will be displayed. Default False 
+            legend : list, List of strings use to display as plot legends  
+            savePlot : str, Path and filename to save the plot e.g: /home/reflectanceSignature.png. Default None 
     """
-    if(len(dfList) != len(filesNames)):
+    if(len(dfList) != len(legend)):
         raise ValueError("List length of dfList and filesNames is different. They must be the same length")
     listLegends = []
     bandValues = []
@@ -69,8 +86,8 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
                 bandNames.append(colName)
             plt.plot(range(len(bandNames)), 
                         bandValues)
-            if len(filesNames) == len(dfList):
-                listLegends.append("%s" %(filesNames[idxFiles]))
+            if len(legend) == len(dfList):
+                listLegends.append("%s" %(legend[idxFiles]))
         else:
             for idx in range(measuredPoints.shape[0]):
                 if idx2skip >= 0 and idx2skip == idx:
@@ -80,19 +97,38 @@ def plotReflectanceSignatures(dfList:list, idx2skip:int=-1, xlabel:str="Bands (n
                 bandValues = list(measuredPoint.values) 
                 plt.plot(range(len(bandNames)), 
                         bandValues)
-                if len(filesNames) == len(dfList):
-                    listLegends.append("%s-%i" %(filesNames[idxFiles], idx))
+                if len(legend) == len(dfList):
+                    listLegends.append("%s-%i" %(legend[idxFiles], idx))
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     plt.xticks(range(len(bandNames)),
                bandNames)
     plt.title(title)
-    if len(filesNames) == len(dfList):
+    if len(legend) == len(dfList):
         plt.legend(listLegends)
     plt.tight_layout()
-    # plt.savefig("Reflectance_Signatures_results.png", dpi=150)  ## Uncomment this line, if you want to save plot as .png-file
+    if not isinstance(savePlot, type(None)):
+        plt.savefig(savePlot, dpi=300)
 
-def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=255, legend:list=[], xlabel:str='Pixel Values', ylabel:str='Frequency', title:str="Bands Histogram"):
+def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=255, legend:list=[], 
+                   xlabel:str='Pixel Values', ylabel:str='Frequency', title:str="Bands Histogram", 
+                   savePlot:str=None) -> None:
+    '''
+        Plot the histogram related to object of interest 
+
+        Parameters 
+        -----------
+            img : numpy.array, Image of size (N,M,CH)
+            mask : numpy.array, Binary mask of size (N,M)
+            bins : int, Number of bins to plot. Default 20 
+            values2keep : int, Number that represent the integer that must be keep it from the referenced mask. Default 255 
+            legend : list, List of string to display as legeneds. Default []
+            xlabel : str, Name of the x-axis. Default 'Pixel Values'
+            ylabel : str, Name of the y-axis. Default 'Frequency'
+            title : str, Plot title. Default 'Bands Histogram'
+            savePlot : str, Path and filename to save the plot e.g: /home/reflectanceSignature.png. Default None 
+
+    '''
     idx2keep = np.where(mask == value2keep)
     _, edges = np.histogram(img, 
                             bins=bins)
@@ -105,23 +141,38 @@ def histSoilSample(img:np.array, mask:np.array, bins:int=20, value2keep:float=25
                  bins=edges, alpha=0.5)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
+    plt.title(title)
     plt.tight_layout()
     if len(legend) == img.shape[2]:
         plt.legend(legend)
+    if not isinstance(savePlot, type(None)):
+        plt.savefig(savePlot, dpi=300)
 
-def showManualPoint(image:np.array, points:list, cross:int=100, thikness:int=5, returnImage:bool=False):
+def showManualPoint(image:np.array, points:list, cross:int=100, thinkness:int=5, returnImage:bool=False):
+    '''
+        Display the coordinates from where the signatures were obtained 
+
+        Parameters 
+        -----------
+            image : numpy.array, Image with shape (N,M,CH)
+            points : list, List of tuples, each tuple contain (X,Y) coordinates 
+            cross : int, Size in pixell to display the cross marker. Default 100  
+            thinkness : int, Line thinkness in pixels. Default 5
+            returnImage : bool, if True the method will return a numpy array of size (N,M,3)
+    '''
     img = image.copy()
     for point in points:
         img = cv2.line(img, 
                 (point[0]-cross, point[1]-cross), 
                 (point[0]+cross, point[1]+cross), 
                 (0, 0, 255),
-                thickness=thikness) 
+                thickness=thinkness) 
         img = cv2.line(img, 
                 (point[0]+cross, point[1]-cross), 
                 (point[0]-cross, point[1]+cross), 
                 (0, 0, 255), 
-                thickness=thikness)
+                thickness=thinkness)
     if returnImage:
         return img
     plt.imshow(img) 
+    
